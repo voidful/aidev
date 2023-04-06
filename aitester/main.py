@@ -85,16 +85,19 @@ def get_mock_run_result(code, threshold, engine, action=None):
             f"Results:\n"
         )
 
-    response = openai.Completion.create(
-        engine=engine,
-        prompt=prompt,
+    response = openai.ChatCompletion.create(
+        model=engine,
+        messages=[
+            {"role": "system", "content": "You are a helpful code assistant."},
+            {"role": "user", "content": prompt},
+        ],
         max_tokens=300,
         n=1,
         stop=None,
         temperature=threshold,
     )
 
-    result = response.choices[0].text.strip()
+    result = response.choices[0]['message']['content'].strip()
     return result
 
 

@@ -1,6 +1,6 @@
 <div align="center">
   <div>
-    <h1 align="center">AI Test</h1>
+    <h1 align="center">AI Tester</h1>
   </div>
   <p><strong>Transform your development workflow with AI-powered testing and suggestions!</strong></p>
   <p>✨ Run mock tests before committing, powered by AI (chatgpt/gpt4)</p>
@@ -8,17 +8,17 @@
   <p>🛠 Automatically generate unit tests for your code changes before committing, powered by AI (chatgpt/gpt4)</p>
 
 
-  <a href="https://pypi.org/project/aitest/">
-        <img alt="PyPI" src="https://img.shields.io/pypi/v/aitest">
+  <a href="https://pypi.org/project/aitester/">
+        <img alt="PyPI" src="https://img.shields.io/pypi/v/aitester">
     </a>
-    <a href="https://github.com/voidful/aitest">
-        <img alt="Download" src="https://img.shields.io/pypi/dm/aitest">
+    <a href="https://github.com/voidful/aitester">
+        <img alt="Download" src="https://img.shields.io/pypi/dm/aitester">
     </a>
-    <a href="https://github.com/voidful/aitest">
-        <img alt="Last Commit" src="https://img.shields.io/github/last-commit/voidful/aitest">
+    <a href="https://github.com/voidful/aitester">
+        <img alt="Last Commit" src="https://img.shields.io/github/last-commit/voidful/aitester">
     </a>
-  <a href="https://github.com/voidful/aitest">
-        <img src="https://visitor-badge.glitch.me/badge?page_id=voidful.aitest" alt="Visitor" />
+  <a href="https://github.com/voidful/aitester">
+        <img src="https://visitor-badge.glitch.me/badge?page_id=voidful.aitester" alt="Visitor" />
     </a>
 </div>
 
@@ -42,20 +42,20 @@ pip install ai-test
 
 ## 🚀 Quick Start
 
-After installation, use the aitest command to analyze your code changes:
+After installation, use the aitester command to analyze your code changes:
 
 ```bash
-aitest
+aitester
 ```
 You can customize the behavior of the CLI using various options:
 
 ```bash
-aitest --threshold 0.8 --engine text-davinci-002 --max-tokens 400
+aitester --threshold 0.8 --engine text-davinci-002 --max-tokens 400
 ```
 For more information on available options, run:
 
 ```bash
-aitest --help
+aitester --help
 ```
 
 ### 📚 Documentation
