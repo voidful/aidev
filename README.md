@@ -43,7 +43,7 @@
 Install the AI Test package using pip:
 
 ```bash
-pip install ai-test
+pip install aitester
 ```
 
 ## 🚀 Quick Start
