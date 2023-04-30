@@ -1,6 +1,6 @@
 <div align="center">
   <div>
-    <h1 align="center">AI Tester</h1>
+    <h1 align="center">AI Dev</h1>
   </div>
   <p>
     <strong>
@@ -14,17 +14,17 @@
   <p>🛠 Automatically generate unit tests for your code changes before committing</p>
   <p>📝 Generate insightful commit messages automatically based on your code changes</p>
 
-  <a href="https://pypi.org/project/aitester/">
-        <img alt="PyPI" src="https://img.shields.io/pypi/v/aitester">
+  <a href="https://pypi.org/project/aidev/">
+        <img alt="PyPI" src="https://img.shields.io/pypi/v/aidev">
     </a>
-    <a href="https://github.com/voidful/aitester">
-        <img alt="Download" src="https://img.shields.io/pypi/dm/aitester">
+    <a href="https://github.com/voidful/aidev">
+        <img alt="Download" src="https://img.shields.io/pypi/dm/aidev">
     </a>
-    <a href="https://github.com/voidful/aitester">
-        <img alt="Last Commit" src="https://img.shields.io/github/last-commit/voidful/aitester">
+    <a href="https://github.com/voidful/aidev">
+        <img alt="Last Commit" src="https://img.shields.io/github/last-commit/voidful/aidev">
     </a>
-  <a href="https://github.com/voidful/aitester">
-        <img src="https://visitor-badge.glitch.me/badge?page_id=voidful.aitester" alt="Visitor" />
+  <a href="https://github.com/voidful/aidev">
+        <img src="https://visitor-badge.glitch.me/badge?page_id=voidful.aidev" alt="Visitor" />
     </a>
 </div>
 
@@ -43,33 +43,33 @@
 Install the AI Test package using pip:
 
 ```bash
-pip install aitester
+pip install aidev
 ```
 
 ## 🚀 Quick Start
 
-After installation, use the aitester command to analyze your code changes:
+After installation, use the aidev command to analyze your code changes:
 
 ```bash
-aitester
+aidev
 ```
 
 You can customize the behavior of the CLI using various options:
 
 ```bash
-aitester --threshold 0.8 --engine gpt-3.5-turbo --max-tokens 400
+aidev --threshold 0.8 --engine gpt-3.5-turbo --max-tokens 400
 ```
 
 For more information on available options, run:
 
 ```bash
-aitester --help
+aidev --help
 ```
 
 ### ⚙️ Configuration
 
 AI Tester allows you to configure various settings to better suit your needs. To manage and edit these configurations,
-use the `aitester-config` CLI command.
+use the `aidev-config` CLI command.
 
 #### Configurable settings include:
 
@@ -82,16 +82,16 @@ use the `aitester-config` CLI command.
 
 #### Configuration management:
 
-The `aitester-config` CLI command allows you to view, add, update, or remove configuration settings. The command
+The `aidev-config` CLI command allows you to view, add, update, or remove configuration settings. The command
 provides a user-friendly interface to manage your settings.
 
 To set up and manage the configuration, follow these steps:
 
-1. Run the `aitester-config` command with the desired subcommand, e.g., `aitester-config set-api-key <your-api-key>`.
+1. Run the `aidev-config` command with the desired subcommand, e.g., `aidev-config set-api-key <your-api-key>`.
 2. The CLI will update the configuration with the provided value.
-3. Use `aitester-config show-config` to view the current configuration settings.
+3. Use `aidev-config show-config` to view the current configuration settings.
 
-The main CLI tool, `aitester`, reads the configuration settings and applies them when generating AI responses, ensuring
+The main CLI tool, `aidev`, reads the configuration settings and applies them when generating AI responses, ensuring
 a customized experience based on your preferences.
 
 ### 📚 How it works
