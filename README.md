@@ -23,9 +23,6 @@
     <a href="https://github.com/voidful/aidev">
         <img alt="Last Commit" src="https://img.shields.io/github/last-commit/voidful/aidev">
     </a>
-  <a href="https://github.com/voidful/aidev">
-        <img src="https://visitor-badge.glitch.me/badge?page_id=voidful.aidev" alt="Visitor" />
-    </a>
 </div>
 
 ---
@@ -82,8 +79,8 @@ use the `aidev-config` CLI command.
 
 #### Configuration management:
 
-The `aidev-config` CLI command allows you to view, add, update, or remove configuration settings. The command
-provides a user-friendly interface to manage your settings.
+The `aidev-config` CLI command allows you to view, add, update, or remove configuration settings. The command provides a
+user-friendly interface to manage your settings.
 
 To set up and manage the configuration, follow these steps:
 
@@ -91,8 +88,8 @@ To set up and manage the configuration, follow these steps:
 2. The CLI will update the configuration with the provided value.
 3. Use `aidev-config show-config` to view the current configuration settings.
 
-The main CLI tool, `aidev`, reads the configuration settings and applies them when generating AI responses, ensuring
-a customized experience based on your preferences.
+The main CLI tool, `aidev`, reads the configuration settings and applies them when generating AI responses, ensuring a
+customized experience based on your preferences.
 
 ### 📚 How it works
 
