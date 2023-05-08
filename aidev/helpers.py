@@ -60,12 +60,13 @@ def update_spinner_animation():
 
 def call_openai_api(prompt: str, engine: str, threshold: float, language: str, max_tokens: int,
                     response_queue: queue.Queue) -> None:
+    print("========================================")
     with animation_status(True):
         response = openai.ChatCompletion.create(
             model=engine,
             messages=[
                 {"role": "system",
-                 "content": f"You are a helpful code assistant.You need to generate Results using the following language: {language}"},
+                 "content": f"You are a helpful code assistant. Answer with language: {language}"},
                 {"role": "user",
                  "content": f"{prompt}"}
             ],
@@ -128,18 +129,21 @@ def build_prompt_template(response_type: ResponseType) -> str:
     elif response_type == ResponseType.EXECUTION_TEST:
         return (
             f"Given the following code changes:\n{{code}}\n"
+            f"Answer the following questions with its title:\n"
             f"- Code Execution Test: Provide a mock run and some test result for the following code changes. \n"
             f"Results:\n"
         )
     elif response_type == ResponseType.CODE_IMPROVEMENT:
         return (
             f"Given the following code changes:\n{{code}}\n"
+            f"Answer the following questions with its title:\n"
             f"- Code Improvement: Are the changes an improvement? If not, what suggestions do you have to improve the code? \n"
             f"Results:\n"
         )
     elif response_type == ResponseType.UNIT_TESTS:
         return (
             f"Given the following code changes:\n{{code}}\n"
+            f"Answer the following questions with its title:\n"
             f"- Unit Tests: Provide example code of unit tests to cover the changes made to the code, but no need write test on documentation change.\n"
             f"Results:\n"
         )
