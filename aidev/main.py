@@ -10,7 +10,7 @@ from aidev.helpers import get_git_diff, get_ai_run_result, get_code_execution_te
 from .config_utils import read_config, store_config
 
 config = read_config() or {}
-detected_language = locale.getdefaultlocale()[0][:2]
+detected_language = 'en' if locale.getdefaultlocale()[0] is None else locale.getdefaultlocale()[0][:2]
 
 
 @click.command()
