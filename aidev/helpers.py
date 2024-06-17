@@ -8,12 +8,17 @@ from itertools import cycle
 from typing import Optional
 
 import git
-import openai
+from openai import OpenAI
+from .config_utils import read_config, store_config
+
+config = read_config()
+client = OpenAI(api_key=config["api_key"])
 
 
 class ResponseType(Enum):
     SIMPLE = "simple"
     EXECUTION_TEST = "execution_test"
+    NAMING_IMPROVEMENT = "naming_improvement"
     CODE_IMPROVEMENT = "code_improvement"
     UNIT_TESTS = "unit_tests"
 
@@ -62,19 +67,16 @@ def call_openai_api(prompt: str, engine: str, threshold: float, language: str, m
                     response_queue: queue.Queue) -> None:
     print("========================================")
     with animation_status(True):
-        response = openai.ChatCompletion.create(
-            model=engine,
-            messages=[
-                {"role": "system",
-                 "content": f"You are a helpful code assistant. Answer with language: {language}"},
-                {"role": "user",
-                 "content": f"{prompt}"}
-            ],
-            max_tokens=max_tokens,
-            n=1,
-            stop=None,
-            temperature=threshold,
-        )
+        response = client.chat.completions.create(model=engine,
+        messages=[
+            {"role": "system",
+             "content": f"You are a helpful code assistant. Answer with language: {language}"},
+            {"role": "user",
+             "content": f"{prompt}"}
+        ],
+        n=1,
+        stop=None,
+        temperature=threshold)
     response_queue.put(response)
 
 
@@ -87,15 +89,9 @@ def input_length_validation(code: str, max_input_length: int) -> bool:
 
 
 def get_ai_response(code: str, response_type: ResponseType, threshold: float, engine: str, language: str = "english",
-                    max_tokens: int = 300) -> str:
-    max_input_lengths = {
-        "gpt-3.5-turbo": 3796,
-        "gpt-4": 7892,
-        "gpt-4-32k": 32468,
-    }
-    max_input_length = max_input_lengths.get(engine, 3000)
+                    max_tokens: int = 8000) -> str:
 
-    if not input_length_validation(code, max_input_length):
+    if not input_length_validation(code, max_tokens):
         return ""
 
     prompt_template = build_prompt_template(response_type)
@@ -111,7 +107,7 @@ def get_ai_response(code: str, response_type: ResponseType, threshold: float, en
     progress_updater.join()
 
     response = response_queue.get()
-    response_text = response.choices[0]['message']['content'].strip().replace("\n\n", "\n")
+    response_text = response.choices[0].message.content.strip().replace("\n\n", "\n")
     return response_text
 
 
@@ -121,6 +117,7 @@ def build_prompt_template(response_type: ResponseType) -> str:
             f"Given the following code changes:\n{{code}}\n"
             f"Answer the following questions with its title and keep it as short as possible:\n"
             f"- Commit Message: Provide a commit message, format it inside $ and following the AngularJS Git Commit Guidelines with type, scope (optional) and subject. Use imperative, present tense, and do not capitalize the first letter of the subject or end it with a period.\n"
+            f"- Naming Improvement: if the variable, function, or class names can be improved or not? \n"
             f"- Code Execution Test: if they can run correctly or not? \n"
             f"- Code Improvement: if they have further improvement or not?\n"
             f"- Unit Tests: if unit tests are needed or not?\n"
@@ -131,6 +128,13 @@ def build_prompt_template(response_type: ResponseType) -> str:
             f"Given the following code changes:\n{{code}}\n"
             f"Answer the following questions with its title:\n"
             f"- Code Execution Test: Provide a mock run and some test result for the following code changes. \n"
+            f"Results:\n"
+        )
+    elif response_type == ResponseType.NAMING_IMPROVEMENT:
+        return (
+            f"Given the following code changes:\n{{code}}\n"
+            f"Answer the following questions with its title:\n"
+            f"- Naming Improvement: if the variable, function, or class names can be improved or not? \n"
             f"Results:\n"
         )
     elif response_type == ResponseType.CODE_IMPROVEMENT:
@@ -164,6 +168,10 @@ def get_code_execution_test_detail(code: str, threshold: float, engine: str, lan
 def get_code_improvement_detail(code: str, threshold: float, engine: str, language: str = "english",
                                 max_tokens: int = 300) -> str:
     return get_ai_response(code, ResponseType.CODE_IMPROVEMENT, threshold, engine, language, max_tokens)
+
+def get_naming_improvement_detail(code: str, threshold: float, engine: str, language: str = "english",
+                                max_tokens: int = 300) -> str:
+    return get_ai_response(code, ResponseType.NAMING_IMPROVEMENT, threshold, engine, language, max_tokens)
 
 
 def get_unit_tests_detail(code: str, threshold: float, engine: str, language: str = "english",

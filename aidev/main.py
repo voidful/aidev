@@ -6,7 +6,7 @@ import openai
 from bullet import Bullet
 
 from aidev.helpers import get_git_diff, get_ai_run_result, get_code_execution_test_detail, get_code_improvement_detail, \
-    get_unit_tests_detail
+    get_unit_tests_detail, get_naming_improvement_detail
 from .config_utils import read_config, store_config
 
 config = read_config() or {}
@@ -36,7 +36,6 @@ def main(threshold, engine, max_tokens, language):
         print("Please restart the CLI tool for the changes to take effect.")
         return
 
-    openai.api_key = config["api_key"]
 
     # Store the provided options in the config
     config["threshold"] = threshold
@@ -53,6 +52,7 @@ def main(threshold, engine, max_tokens, language):
     while True:
         cli = Bullet(choices=["Create a commit",
                               "Run Code Execution Test",
+                              "Naming Improvement",
                               "Give detailed Code Improvement",
                               "Create a unit test for this change",
                               "Exit"],
@@ -82,6 +82,9 @@ def main(threshold, engine, max_tokens, language):
         elif action == "Run Code Execution Test":
             response_text = "Code Execution Test\n"
             response_text += get_code_execution_test_detail(diff, threshold, engine, language, max_tokens)
+        elif action == "Give Naming Improvement":
+            response_text = "Naming Improvement\n"
+            response_text += get_naming_improvement_detail(diff, threshold, engine, language, max_tokens)
         elif action == "Give detailed Code Improvement":
             response_text = "Code Improvement\n"
             response_text += get_code_improvement_detail(diff, threshold, engine, language, max_tokens)
