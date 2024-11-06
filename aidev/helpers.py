@@ -68,16 +68,21 @@ def call_openai_api(prompt: str, engine: str, threshold: float, language: str, m
     print("========================================")
     with animation_status(True):
         response = client.chat.completions.create(model=engine,
-        messages=[
-            {"role": "system",
-             "content": f"You are a helpful code assistant. Answer with language: {language}"},
-            {"role": "user",
-             "content": f"{prompt}"}
-        ],
-        n=1,
-        stop=None,
-        temperature=threshold)
+                                                  messages=[
+                                                      {"role": "system",
+                                                       "content": f"You are a helpful code assistant. Answer with language: {language}"},
+                                                      {"role": "user",
+                                                       "content": f"{prompt}"}
+                                                  ],
+                                                  n=1,
+                                                  stop=None,
+                                                  temperature=threshold)
     response_queue.put(response)
+    total_tokens = response.usage.total_tokens
+    cost_per_token = 0.00250
+    estimated_cost = total_tokens / 1000 * cost_per_token
+    print(f"\nTokens used: {total_tokens}")
+    print(f"Estimated cost: ${estimated_cost:.4f}")
 
 
 def input_length_validation(code: str, max_input_length: int) -> bool:
@@ -90,11 +95,11 @@ def input_length_validation(code: str, max_input_length: int) -> bool:
 
 def get_ai_response(code: str, response_type: ResponseType, threshold: float, engine: str, language: str = "english",
                     max_tokens: int = 8000) -> str:
-
     if not input_length_validation(code, max_tokens):
         return ""
 
     prompt_template = build_prompt_template(response_type)
+
     prompt = prompt_template.format(code=code)
     response_queue = queue.Queue()
     api_call = threading.Thread(target=call_openai_api,
@@ -169,8 +174,9 @@ def get_code_improvement_detail(code: str, threshold: float, engine: str, langua
                                 max_tokens: int = 300) -> str:
     return get_ai_response(code, ResponseType.CODE_IMPROVEMENT, threshold, engine, language, max_tokens)
 
+
 def get_naming_improvement_detail(code: str, threshold: float, engine: str, language: str = "english",
-                                max_tokens: int = 300) -> str:
+                                  max_tokens: int = 300) -> str:
     return get_ai_response(code, ResponseType.NAMING_IMPROVEMENT, threshold, engine, language, max_tokens)
 
 
