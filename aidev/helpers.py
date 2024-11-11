@@ -86,11 +86,13 @@ def call_openai_api(prompt: str, engine: str, threshold: float, language: str, m
 
 
 def input_length_validation(code: str, max_input_length: int) -> bool:
-    if len(code) > max_input_length:
-        print(f"Warning: Code change is too extensive ({len(code)} characters) for AI to handle. \n"
-              f"Please consider breaking your changes into smaller commits to less than {max_input_length} characters.")
+    word_count = len(code.split())
+    if word_count > max_input_length:
+        print(f"Warning: Code change is too extensive ({word_count} words) for AI to handle. \n"
+              f"Please consider breaking your changes into smaller commits to less than {max_input_length} words.")
         return False
     return True
+
 
 
 def get_ai_response(code: str, response_type: ResponseType, threshold: float, engine: str, language: str = "english",
