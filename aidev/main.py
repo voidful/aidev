@@ -14,8 +14,11 @@ client = OpenAI(api_key=config.get('api_key'))
 
 
 def fetch_available_engines():
-    models = client.models.list()
-    return [model.id for model in models.data]
+    try:
+        models = client.models.list()
+        return [model.id for model in models.data]
+    except:
+        return ['chatgpt-4o-latest']
 
 
 @click.command()
