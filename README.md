@@ -35,6 +35,18 @@
 - Easy-to-use CLI with configuration options for a tailored experience
 - Improve code quality, reduce technical debt, and increase confidence in your commits
 
+### Try unit-test suggestions
+
+In an existing disposable repository, change a tracked file in your working tree
+(for example, make a small change to the behavior of a function in a toy
+project). Run `aidev` from the repository root and select
+**Create a unit test for this change**. Staged changes take precedence over
+unstaged changes. The CLI prints suggested test code; review it, save it, and
+run it with your own test runner.
+
+The CLI sends the selected Git diff to the configured model API, so use a toy
+diff for the demo rather than code containing secrets or private data.
+
 ## 📦 Installation
 
 Install the AI Test package using pip:
